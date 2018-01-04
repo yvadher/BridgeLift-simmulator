@@ -2,12 +2,12 @@ import p5 from 'p5';
 import 'p5/lib/addons/p5.sound';
 import 'p5/lib/addons/p5.dom';
 
+//Import components
 import River from './components/river';
-
+import Boat from './components/boat';
 
 //Constants 
-//import * as constants from "./constants";
-
+import * as constants from "./constants";
 
 
 // Sketch scope
@@ -23,6 +23,7 @@ const sketch = (p5) => {
 
   //All golbal objects var
   var river = new River();
+  var boat = new Boat();
 
   // Setup function
   p5.setup = () => {
@@ -30,12 +31,15 @@ const sketch = (p5) => {
     p5.frameRate(10);
 
     // Your stuff goes in here
+    p5.background(constants.riverColor);
+    river.show();
+   
   }
 
   // Draw function
   p5.draw = () => {
-    p5.background("yellow");
-    river.show();
+    boat.show();  
+    
   }
 }
 

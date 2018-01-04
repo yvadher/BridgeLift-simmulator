@@ -68,7 +68,7 @@ require = (function (modules, cache, entry) {
 
   // Override the current require with this new one
   return newRequire;
-})({15:[function(require,module,exports) {
+})({12:[function(require,module,exports) {
 'use strict'
 
 exports.byteLength = byteLength
@@ -277,7 +277,7 @@ module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],8:[function(require,module,exports) {
+},{}],9:[function(require,module,exports) {
 
 var global = (1,eval)("this");
 /*!
@@ -2070,7 +2070,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":15,"ieee754":14,"isarray":13,"buffer":8}],9:[function(require,module,exports) {
+},{"base64-js":12,"ieee754":14,"isarray":13,"buffer":9}],8:[function(require,module,exports) {
 
 // shim for using process in browser
 var process = module.exports = {};
@@ -2257,7 +2257,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],7:[function(require,module,exports) {
+},{}],6:[function(require,module,exports) {
 var global = (1,eval)("this");
 var Buffer = require("buffer").Buffer;
 var process = require("process");
@@ -73667,7 +73667,7 @@ module.exports = p5;
 
 },{"../core/core":55,"./p5.Geometry":102}]},{},[46])(46)
 });
-},{"buffer":8,"process":9}],11:[function(require,module,exports) {
+},{"buffer":9,"process":8}],16:[function(require,module,exports) {
 /*! p5.sound.js v0.3.5 2017-07-28 */
 /**
  *  p5.sound extends p5 with <a href="http://caniuse.com/audio-api"
@@ -84189,7 +84189,7 @@ src_app = function () {
 }(sndcore, master, helpers, errorHandler, panner, soundfile, amplitude, fft, signal, oscillator, env, pulse, noise, audioin, filter, delay, reverb, metro, looper, compressor, soundRecorder, peakdetect, gain, distortion);
 }));
 
-},{"../p5":7}],10:[function(require,module,exports) {
+},{"../p5":6}],15:[function(require,module,exports) {
 /*! p5.dom.js v0.3.4 Aug 11, 2017 */
 /**
  * <p>The web is much more than just canvas and p5.dom makes it easy to interact
@@ -86727,7 +86727,7 @@ src_app = function () {
 
 }));
 
-},{"../p5":7}],17:[function(require,module,exports) {
+},{"../p5":6}],11:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86736,6 +86736,7 @@ Object.defineProperty(exports, "__esModule", {
 const width = 1000;
 const height = 800;
 const riverColor = "#639af2";
+const lineWidth = 15;
 
 class river {
   constructor() {
@@ -86746,10 +86747,62 @@ class river {
     p5.noStroke();
     p5.fill(riverColor);
     p5.rect(this.pos.x, this.pos.y, width * 0.2, height);
+    this.drawWater();
+  }
+
+  drawWater() {
+
+    for (var y = 30; y < height; y = y + 30) {
+      for (var x = 30; x < width; x = x + 50) {
+        p5.stroke('white');
+        p5.line(x, y, x + lineWidth, y);
+      }
+    }
   }
 }
 exports.default = river;
-},{}],5:[function(require,module,exports) {
+},{}],18:[function(require,module,exports) {
+module.exports="/dist/163089316c68b708b936b7f647e8f715.png";
+},{}],17:[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _boat = require("../../assets/boat.png");
+
+var _boat2 = _interopRequireDefault(_boat);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const width = 1000;
+const height = 800;
+
+class boat {
+  constructor() {
+    this.img = p5.loadImage(_boat2.default);
+    console.log("Image loaded");
+    this.pos = { x: width / 2 - width * 0.5, y: 0 };
+  }
+
+  show() {
+    p5.image(this.img, this.pos.x, this.pos.y, width * 0.1, height * 0.2);
+  }
+
+}
+exports.default = boat;
+},{"../../assets/boat.png":18}],10:[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+const riverColor = exports.riverColor = "#639af2";
+const width = exports.width = 1000;
+const height = exports.height = 800;
+const lineWidth = exports.lineWidth = 15;
+},{}],4:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86768,11 +86821,17 @@ var _river = require("./components/river");
 
 var _river2 = _interopRequireDefault(_river);
 
+var _boat = require("./components/boat");
+
+var _boat2 = _interopRequireDefault(_boat);
+
+var _constants = require("./constants");
+
+var constants = _interopRequireWildcard(_constants);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//Constants 
-//import * as constants from "./constants";
-
 
 // Sketch scope
 const sketch = p5 => {
@@ -86786,6 +86845,7 @@ const sketch = p5 => {
 
   //All golbal objects var
   var river = new _river2.default();
+  var boat = new _boat2.default();
 
   // Setup function
   p5.setup = () => {
@@ -86793,17 +86853,22 @@ const sketch = p5 => {
     p5.frameRate(10);
 
     // Your stuff goes in here
+    p5.background(constants.riverColor);
+    river.show();
   };
 
   // Draw function
   p5.draw = () => {
-    p5.background("yellow");
-    river.show();
+    boat.show();
   };
 };
 
+//Constants 
+
+
+//Import components
 exports.default = sketch;
-},{"p5":7,"p5/lib/addons/p5.sound":11,"p5/lib/addons/p5.dom":10,"./components/river":17}],16:[function(require,module,exports) {
+},{"p5":6,"p5/lib/addons/p5.sound":16,"p5/lib/addons/p5.dom":15,"./components/river":11,"./components/boat":17,"./constants":10}],7:[function(require,module,exports) {
 var bundleURL = null;
 function getBundleURLCached() {
   if (!bundleURL) {
@@ -86834,7 +86899,7 @@ function getBaseURL(url) {
 exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 
-},{}],12:[function(require,module,exports) {
+},{}],5:[function(require,module,exports) {
 var bundle = require('./bundle-url');
 
 function updateLink(link) {
@@ -86866,13 +86931,13 @@ function reloadCSS() {
 
 module.exports = reloadCSS;
 
-},{"./bundle-url":16}],6:[function(require,module,exports) {
+},{"./bundle-url":7}],3:[function(require,module,exports) {
 
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
         module.hot.accept(reloadCSS);
       
-},{"_css_loader":12}],4:[function(require,module,exports) {
+},{"_css_loader":5}],2:[function(require,module,exports) {
 "use strict";
 
 var _p = require("p5");
@@ -86889,7 +86954,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // Initialize sketch
 new _p2.default(_sketch2.default);
-},{"p5":7,"./js/sketch":5,"./styles/main.css":6}],0:[function(require,module,exports) {
+},{"p5":6,"./js/sketch":4,"./styles/main.css":3}],0:[function(require,module,exports) {
 var global = (1, eval)('this');
 var OldModule = module.bundle.Module;
 function Module() {
@@ -86907,7 +86972,7 @@ function Module() {
 module.bundle.Module = Module;
 
 if (!module.bundle.parent && typeof WebSocket !== 'undefined') {
-  var ws = new WebSocket('ws://localhost:63240/');
+  var ws = new WebSocket('ws://localhost:63497/');
   ws.onmessage = function(event) {
     var data = JSON.parse(event.data);
 
@@ -87008,4 +87073,4 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.require, id)
   });
 }
-},{}]},{},[0,4])
+},{}]},{},[0,2])

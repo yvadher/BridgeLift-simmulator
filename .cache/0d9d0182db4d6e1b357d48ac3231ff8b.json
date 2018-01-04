@@ -1,0 +1,1 @@
+{"dependencies":[],"generated":{"js":"\"use strict\";\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nconst riverColor = exports.riverColor = \"#639af2\";\nconst width = exports.width = 1000;\nconst height = exports.height = 800;\nconst lineWidth = exports.lineWidth = 15;"},"hash":"a569eceb7289779d585e0c639a2ef59b"}
