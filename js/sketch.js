@@ -2,15 +2,27 @@ import p5 from 'p5';
 import 'p5/lib/addons/p5.sound';
 import 'p5/lib/addons/p5.dom';
 
+import River from './components/river';
+
+
+//Constants 
+//import * as constants from "./constants";
+
+
+
 // Sketch scope
 const sketch = (p5) => {
 
   // Variables scoped within p5
-  const canvasWidth = p5.windowWidth;
-  const canvasHeight = p5.windowHeight;
+  const canvasWidth = 1000;
+  const canvasHeight = 800;
 
   // make library globally available
   window.p5 = p5;
+
+
+  //All golbal objects var
+  var river = new River();
 
   // Setup function
   p5.setup = () => {
@@ -23,7 +35,7 @@ const sketch = (p5) => {
   // Draw function
   p5.draw = () => {
     p5.background("yellow");
-    p5.ellipse(50, 50, 80, 80);
+    river.show();
   }
 }
 
