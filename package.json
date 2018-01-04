@@ -1,0 +1,25 @@
+{
+  "name": "trainsimmulator",
+  "version": "1.0.0",
+  "description": "Train simmulator with p5 and ES6",
+  "main": "App.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yvadher/Train-Simmulator.git"
+  },
+  "author": "Yagnik",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yvadher/Train-Simmulator/issues"
+  },
+  "homepage": "https://github.com/yvadher/Train-Simmulator#readme",
+  "dependencies": {
+    "p5": "^0.5.16"
+  },
+  "devDependencies": {
+    "node-sass": "^4.7.2"
+  }
+}
