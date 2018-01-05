@@ -15,7 +15,7 @@ const sketch = (p5) => {
 
   // Variables scoped within p5
   const canvasWidth = 1000;
-  const canvasHeight = 800;
+  const canvasHeight = 700;
 
   // make library globally available
   window.p5 = p5;

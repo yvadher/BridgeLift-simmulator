@@ -6,6 +6,7 @@
 // anything defined in a previous bundle is accessed via the
 // orig method which is the require for previous bundles
 
+// eslint-disable-next-line no-global-assign
 require = (function (modules, cache, entry) {
   // Save the require from previous bundle to this closure if any
   var previousRequire = typeof require === "function" && require;
@@ -68,7 +69,7 @@ require = (function (modules, cache, entry) {
 
   // Override the current require with this new one
   return newRequire;
-})({16:[function(require,module,exports) {
+})({19:[function(require,module,exports) {
 'use strict'
 
 exports.byteLength = byteLength
@@ -184,7 +185,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],15:[function(require,module,exports) {
+},{}],20:[function(require,module,exports) {
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -270,14 +271,14 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],14:[function(require,module,exports) {
+},{}],18:[function(require,module,exports) {
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],11:[function(require,module,exports) {
+},{}],16:[function(require,module,exports) {
 
 var global = (1,eval)("this");
 /*!
@@ -2070,7 +2071,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":16,"ieee754":15,"isarray":14,"buffer":11}],12:[function(require,module,exports) {
+},{"base64-js":19,"ieee754":20,"isarray":18,"buffer":16}],17:[function(require,module,exports) {
 
 // shim for using process in browser
 var process = module.exports = {};
@@ -2257,7 +2258,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],6:[function(require,module,exports) {
+},{}],7:[function(require,module,exports) {
 var global = (1,eval)("this");
 var Buffer = require("buffer").Buffer;
 var process = require("process");
@@ -73667,7 +73668,7 @@ module.exports = p5;
 
 },{"../core/core":55,"./p5.Geometry":102}]},{},[46])(46)
 });
-},{"buffer":11,"process":12}],17:[function(require,module,exports) {
+},{"buffer":16,"process":17}],13:[function(require,module,exports) {
 /*! p5.sound.js v0.3.5 2017-07-28 */
 /**
  *  p5.sound extends p5 with <a href="http://caniuse.com/audio-api"
@@ -84189,7 +84190,7 @@ src_app = function () {
 }(sndcore, master, helpers, errorHandler, panner, soundfile, amplitude, fft, signal, oscillator, env, pulse, noise, audioin, filter, delay, reverb, metro, looper, compressor, soundRecorder, peakdetect, gain, distortion);
 }));
 
-},{"../p5":6}],18:[function(require,module,exports) {
+},{"../p5":7}],12:[function(require,module,exports) {
 /*! p5.dom.js v0.3.4 Aug 11, 2017 */
 /**
  * <p>The web is much more than just canvas and p5.dom makes it easy to interact
@@ -86727,16 +86728,24 @@ src_app = function () {
 
 }));
 
-},{"../p5":6}],9:[function(require,module,exports) {
+},{"../p5":7}],9:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 const width = 1000;
-const height = 800;
+const height = 700;
 const riverColor = "#639af2";
 const lineWidth = 15;
+
+const T1 = height * 0.05;
+const T2 = height * 0.15;
+const T3 = height * 0.20;
+
+const B1 = height - height * 0.05;
+const B2 = height - height * 0.15;
+const B3 = height - height * 0.20;
 
 class river {
   constructor() {
@@ -86748,22 +86757,33 @@ class river {
     p5.fill(riverColor);
     p5.rect(this.pos.x, this.pos.y, width * 0.2, height);
     this.drawWater();
+    this.drawThresoldLine();
   }
 
   drawWater() {
-
-    for (var y = 30; y < height; y = y + 30) {
-      for (var x = 30; x < width; x = x + 50) {
+    for (var y = 30; y < height; y = y + 20) {
+      for (var x = 30; x < width; x = x + 40) {
         p5.stroke('white');
         p5.line(x, y, x + lineWidth, y);
       }
     }
   }
+
+  drawThresoldLine() {
+    p5.stroke('green');
+    p5.line(this.pos.x, T1, this.pos.x + width * 0.2, T1);
+    p5.line(this.pos.x, T2, this.pos.x + width * 0.2, T2);
+    p5.line(this.pos.x, T3, this.pos.x + width * 0.2, T3);
+
+    p5.line(this.pos.x, B1, this.pos.x + width * 0.2, B1);
+    p5.line(this.pos.x, B2, this.pos.x + width * 0.2, B2);
+    p5.line(this.pos.x, B3, this.pos.x + width * 0.2, B3);
+  }
 }
 exports.default = river;
-},{}],13:[function(require,module,exports) {
+},{}],11:[function(require,module,exports) {
 module.exports="/dist/163089316c68b708b936b7f647e8f715.png";
-},{}],8:[function(require,module,exports) {
+},{}],10:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86777,22 +86797,35 @@ var _boat2 = _interopRequireDefault(_boat);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const width = 1000;
-const height = 800;
+const height = 700;
+
+const T1 = height * 0.05;
+const T2 = height * 0.15;
+const T3 = height * 0.20;
+
+const B1 = height - height * 0.05;
+const B2 = height - height * 0.15;
+const B3 = height - height * 0.20;
 
 class boat {
   constructor() {
     this.img = p5.loadImage(_boat2.default);
     console.log("Image loaded");
-    this.pos = { x: width / 2 - width * 0.05, y: 0 };
+    this.pos = { x: width / 2 - width * 0.05, y: 0 - 120 };
   }
 
   show() {
     p5.image(this.img, this.pos.x, this.pos.y, width * 0.1, height * 0.2);
   }
 
+  update() {
+    let bottom = this.pos.y + height * 0.2;
+    let top = this.pos.y;
+  }
+
 }
 exports.default = boat;
-},{"../../assets/boat.png":13}],7:[function(require,module,exports) {
+},{"../../assets/boat.png":11}],8:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86802,7 +86835,17 @@ const riverColor = exports.riverColor = "#639af2";
 const width = exports.width = 1000;
 const height = exports.height = 800;
 const lineWidth = exports.lineWidth = 15;
-},{}],4:[function(require,module,exports) {
+
+// Top thresold line 
+const T1 = exports.T1 = height * 0.05,
+      T2 = exports.T2 = height * 0.15,
+      T3 = exports.T3 = height * 0.20;
+
+//Bottom thresold line
+const B1 = exports.B1 = height - height * 0.05,
+      B2 = exports.B2 = height - height * 0.15,
+      B3 = exports.B3 = height - height * 0.20;
+},{}],6:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86838,7 +86881,7 @@ const sketch = p5 => {
 
   // Variables scoped within p5
   const canvasWidth = 1000;
-  const canvasHeight = 800;
+  const canvasHeight = 700;
 
   // make library globally available
   window.p5 = p5;
@@ -86868,7 +86911,7 @@ const sketch = p5 => {
 
 //Import components
 exports.default = sketch;
-},{"p5":6,"p5/lib/addons/p5.sound":17,"p5/lib/addons/p5.dom":18,"./components/river":9,"./components/boat":8,"./constants":7}],10:[function(require,module,exports) {
+},{"p5":7,"p5/lib/addons/p5.sound":13,"p5/lib/addons/p5.dom":12,"./components/river":9,"./components/boat":10,"./constants":8}],15:[function(require,module,exports) {
 var bundleURL = null;
 function getBundleURLCached() {
   if (!bundleURL) {
@@ -86899,7 +86942,7 @@ function getBaseURL(url) {
 exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 
-},{}],5:[function(require,module,exports) {
+},{}],14:[function(require,module,exports) {
 var bundle = require('./bundle-url');
 
 function updateLink(link) {
@@ -86931,13 +86974,13 @@ function reloadCSS() {
 
 module.exports = reloadCSS;
 
-},{"./bundle-url":10}],3:[function(require,module,exports) {
+},{"./bundle-url":15}],5:[function(require,module,exports) {
 
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
         module.hot.accept(reloadCSS);
       
-},{"_css_loader":5}],2:[function(require,module,exports) {
+},{"_css_loader":14}],4:[function(require,module,exports) {
 "use strict";
 
 var _p = require("p5");
@@ -86954,7 +86997,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // Initialize sketch
 new _p2.default(_sketch2.default);
-},{"p5":6,"./js/sketch":4,"./styles/main.css":3}],0:[function(require,module,exports) {
+},{"p5":7,"./js/sketch":6,"./styles/main.css":5}],0:[function(require,module,exports) {
 var global = (1, eval)('this');
 var OldModule = module.bundle.Module;
 function Module() {
@@ -86972,7 +87015,7 @@ function Module() {
 module.bundle.Module = Module;
 
 if (!module.bundle.parent && typeof WebSocket !== 'undefined') {
-  var ws = new WebSocket('ws://localhost:50928/');
+  var ws = new WebSocket('ws://' + window.location.hostname + ':51676/');
   ws.onmessage = function(event) {
     var data = JSON.parse(event.data);
 
@@ -87073,4 +87116,4 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.require, id)
   });
 }
-},{}]},{},[0,2])
+},{}]},{},[0,4])
