@@ -15,7 +15,7 @@ export default class boat{
     constructor(){
         this.img = p5.loadImage(boatImg);
         console.log("Image loaded");
-        this.pos = { x: (width/2 - (width*0.05)), y: 0 - 120};
+        this.pos = { x: (width/2 - (width*0.05)), y: 0 - height*0.2};
     }
 
     show(){
@@ -26,9 +26,24 @@ export default class boat{
         let bottom = this.pos.y + height*0.2;
         let top = this.pos.y; 
 
+        if (emergency){
+            p5.stroke('red');
+            p5.strokeWeight(3);
+            p5.line(this.pos.x, this.pos.y , this.pos.x + width*0.1, this.pos.y + height*0.2);
+            p5.line(this.pos.x + width*0.1 , this.pos.y , this.pos.x, this.pos.y + height*0.2);
+            p5.strokeWeight(1);
+        }else {
+            if(this.pos.y >= height + height*0.2){
+                this.pos.y = 0-height*0.2;
+            }else{
+                this.pos.y += 10;
+            }
+        }
+    }
 
-
-
+    //Get current location
+    getPos(){
+        return this.pos;
     }
 
 }
