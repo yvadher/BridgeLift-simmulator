@@ -6,7 +6,6 @@
 // anything defined in a previous bundle is accessed via the
 // orig method which is the require for previous bundles
 
-// eslint-disable-next-line no-global-assign
 require = (function (modules, cache, entry) {
   // Save the require from previous bundle to this closure if any
   var previousRequire = typeof require === "function" && require;
@@ -69,7 +68,7 @@ require = (function (modules, cache, entry) {
 
   // Override the current require with this new one
   return newRequire;
-})({15:[function(require,module,exports) {
+})({17:[function(require,module,exports) {
 'use strict'
 
 exports.byteLength = byteLength
@@ -271,7 +270,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],17:[function(require,module,exports) {
+},{}],15:[function(require,module,exports) {
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
@@ -2071,7 +2070,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":15,"ieee754":16,"isarray":17,"buffer":8}],9:[function(require,module,exports) {
+},{"base64-js":17,"ieee754":16,"isarray":15,"buffer":8}],9:[function(require,module,exports) {
 
 // shim for using process in browser
 var process = module.exports = {};
@@ -73668,7 +73667,7 @@ module.exports = p5;
 
 },{"../core/core":55,"./p5.Geometry":102}]},{},[46])(46)
 });
-},{"buffer":8,"process":9}],18:[function(require,module,exports) {
+},{"buffer":8,"process":9}],19:[function(require,module,exports) {
 /*! p5.sound.js v0.3.5 2017-07-28 */
 /**
  *  p5.sound extends p5 with <a href="http://caniuse.com/audio-api"
@@ -84190,7 +84189,7 @@ src_app = function () {
 }(sndcore, master, helpers, errorHandler, panner, soundfile, amplitude, fft, signal, oscillator, env, pulse, noise, audioin, filter, delay, reverb, metro, looper, compressor, soundRecorder, peakdetect, gain, distortion);
 }));
 
-},{"../p5":6}],19:[function(require,module,exports) {
+},{"../p5":6}],18:[function(require,module,exports) {
 /*! p5.dom.js v0.3.4 Aug 11, 2017 */
 /**
  * <p>The web is much more than just canvas and p5.dom makes it easy to interact
@@ -86728,7 +86727,7 @@ src_app = function () {
 
 }));
 
-},{"../p5":6}],11:[function(require,module,exports) {
+},{"../p5":6}],12:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86783,7 +86782,7 @@ class river {
 exports.default = river;
 },{}],14:[function(require,module,exports) {
 module.exports="/dist/163089316c68b708b936b7f647e8f715.png";
-},{}],12:[function(require,module,exports) {
+},{}],11:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86897,7 +86896,7 @@ class bridge {
 
     p5.strokeWeight(3);
     p5.stroke('white');
-    dashedLine(this.leftPos.topLeft.x, height / 2 + 3, this.leftPos.topRight.x, height / 2 + 3);
+    //Draw dashed line
     p5.strokeWeight(1);
   }
 
@@ -86906,16 +86905,16 @@ class bridge {
     if (bridgeOpen && this.leftPos.topRight.y >= height * top - maxOpenHeight) {
 
       //Left side 
-      this.leftPos.topRight.y -= 0.5;
-      this.leftPos.bottomRight.y -= 0.5;
-      this.leftPos.topRight.x -= 0.25;
-      this.leftPos.bottomRight.x -= 0.25;
+      this.leftPos.topRight.y -= 0.7;
+      this.leftPos.bottomRight.y -= 0.7;
+      this.leftPos.topRight.x -= 0.35;
+      this.leftPos.bottomRight.x -= 0.35;
 
       //Right side 
-      this.rightPos.topLeft.y -= 0.5;
-      this.rightPos.bottomLeft.y -= 0.5;
-      this.rightPos.topLeft.x += 0.25;
-      this.rightPos.bottomLeft.x += 0.25;
+      this.rightPos.topLeft.y -= 0.7;
+      this.rightPos.bottomLeft.y -= 0.7;
+      this.rightPos.topLeft.x += 0.35;
+      this.rightPos.bottomLeft.x += 0.35;
     } else {}
 
     if (bridgeClose && this.leftPos.topRight.y <= height * top - maxOpenHeight) {}
@@ -86942,7 +86941,7 @@ const T1 = exports.T1 = height * 0.05,
 const B1 = exports.B1 = height - height * 0.05,
       B2 = exports.B2 = height - height * 0.15,
       B3 = exports.B3 = height - height * 0.20;
-},{}],4:[function(require,module,exports) {
+},{}],3:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -87027,7 +87026,7 @@ const sketch = p5 => {
 
 //Constants 
 exports.default = sketch;
-},{"p5":6,"p5/lib/addons/p5.sound":18,"p5/lib/addons/p5.dom":19,"./components/river":11,"./components/boat":12,"./components/bridge":13,"./constants":10}],7:[function(require,module,exports) {
+},{"p5":6,"p5/lib/addons/p5.sound":19,"p5/lib/addons/p5.dom":18,"./components/river":12,"./components/boat":11,"./components/bridge":13,"./constants":10}],7:[function(require,module,exports) {
 var bundleURL = null;
 function getBundleURLCached() {
   if (!bundleURL) {
@@ -87090,7 +87089,7 @@ function reloadCSS() {
 
 module.exports = reloadCSS;
 
-},{"./bundle-url":7}],3:[function(require,module,exports) {
+},{"./bundle-url":7}],4:[function(require,module,exports) {
 
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
@@ -87113,7 +87112,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // Initialize sketch
 new _p2.default(_sketch2.default);
-},{"p5":6,"./js/sketch":4,"./styles/main.css":3}],0:[function(require,module,exports) {
+},{"p5":6,"./js/sketch":3,"./styles/main.css":4}],0:[function(require,module,exports) {
 var global = (1, eval)('this');
 var OldModule = module.bundle.Module;
 function Module() {
@@ -87131,7 +87130,7 @@ function Module() {
 module.bundle.Module = Module;
 
 if (!module.bundle.parent && typeof WebSocket !== 'undefined') {
-  var ws = new WebSocket('ws://' + window.location.hostname + ':55334/');
+  var ws = new WebSocket('ws://localhost:56441/');
   ws.onmessage = function(event) {
     var data = JSON.parse(event.data);
 

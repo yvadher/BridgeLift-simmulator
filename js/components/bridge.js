@@ -45,7 +45,7 @@ export default class bridge{
 
         p5.strokeWeight(3);
         p5.stroke('white');
-        dashedLine(this.leftPos.topLeft.x, height/2 +3, this.leftPos.topRight.x, height/2 +3);
+       //Draw dashed line
         p5.strokeWeight(1);
     }
 
@@ -54,16 +54,16 @@ export default class bridge{
         if(bridgeOpen && this.leftPos.topRight.y >= (height*top - maxOpenHeight ) ){
             
             //Left side 
-            this.leftPos.topRight.y -=0.5;
-            this.leftPos.bottomRight.y -= 0.5;
-            this.leftPos.topRight.x -=0.25;
-            this.leftPos.bottomRight.x -= 0.25;
+            this.leftPos.topRight.y -=0.7;
+            this.leftPos.bottomRight.y -= 0.7;
+            this.leftPos.topRight.x -=0.35;
+            this.leftPos.bottomRight.x -= 0.35;
 
             //Right side 
-            this.rightPos.topLeft.y -=0.5;
-            this.rightPos.bottomLeft.y -= 0.5;
-            this.rightPos.topLeft.x +=0.25;
-            this.rightPos.bottomLeft.x += 0.25;
+            this.rightPos.topLeft.y -=0.7;
+            this.rightPos.bottomLeft.y -= 0.7;
+            this.rightPos.topLeft.x +=0.35;
+            this.rightPos.bottomLeft.x += 0.35;
         }else {
 
         }
