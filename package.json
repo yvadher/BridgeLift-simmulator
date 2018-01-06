@@ -4,7 +4,7 @@
   "description": "BridgeLift simmulator with p5 and ES6",
   "main": "App.js",
   "scripts": {
-    "start": "parcel index.html"
+    "server": "parcel index.html"
   },
   "repository": {
     "type": "git",
