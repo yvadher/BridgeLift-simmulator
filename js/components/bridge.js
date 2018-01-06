@@ -1,7 +1,6 @@
 
 import * as constants from '../constants';
 import dashLine from '../Methods/dashedLine';
-import { B1 } from '../constants';
 
 const width = constants.width;
 const height = constants.height;
@@ -11,6 +10,10 @@ const bottom = 0.58;
 
 const maxOpenHeight = 50;
 const maxOpenWidth = 25;
+
+const roadColor = constants.roadColor;
+
+const speed = constants.speedAnim/10;
 
 export default class bridge{
 
@@ -31,7 +34,7 @@ export default class bridge{
 
     show(){
 
-        p5.fill('#666666');
+        p5.fill(roadColor);
         p5.beginShape();
         p5.vertex(this.leftPos.topLeft.x , this.leftPos.topLeft.y);
         p5.vertex(this.leftPos.bottomLeft.x, this.leftPos.bottomLeft.y);
@@ -39,7 +42,7 @@ export default class bridge{
         p5.vertex(this.leftPos.topRight.x, this.leftPos.topRight.y);
         p5.endShape(p5.CLOSE);
 
-        p5.fill('#666666');
+        p5.fill(roadColor);
         p5.beginShape();
         p5.vertex(this.rightPos.topLeft.x , this.rightPos.topLeft.y);
         p5.vertex(this.rightPos.bottomLeft.x, this.rightPos.bottomLeft.y);
@@ -84,31 +87,31 @@ export default class bridge{
         if(bridgeOpen && this.leftPos.topRight.y >= (height*top - maxOpenHeight ) ){
             
             //Left side 
-            this.leftPos.topRight.y -=0.7;
-            this.leftPos.bottomRight.y -= 0.7;
-            this.leftPos.topRight.x -=0.35;
-            this.leftPos.bottomRight.x -= 0.35;
+            this.leftPos.topRight.y -=speed;
+            this.leftPos.bottomRight.y -= speed;
+            this.leftPos.topRight.x -=speed/2;
+            this.leftPos.bottomRight.x -= speed/2;
 
             //Right side 
-            this.rightPos.topLeft.y -=0.7;
-            this.rightPos.bottomLeft.y -= 0.7;
-            this.rightPos.topLeft.x +=0.35;
-            this.rightPos.bottomLeft.x += 0.35;
+            this.rightPos.topLeft.y -=speed;
+            this.rightPos.bottomLeft.y -= speed;
+            this.rightPos.topLeft.x +=speed/2;
+            this.rightPos.bottomLeft.x += speed/2;
 
         }else if ( (!bridgeOpen) && (this.leftPos.topRight.y != this.leftPos.topLeft.y)) {
             
             //Close bridge
             //Left side 
-            this.leftPos.topRight.y +=0.7;
-            this.leftPos.bottomRight.y += 0.7;
-            this.leftPos.topRight.x +=0.35;
-            this.leftPos.bottomRight.x += 0.35;
+            this.leftPos.topRight.y +=speed;
+            this.leftPos.bottomRight.y += speed;
+            this.leftPos.topRight.x +=speed/2;
+            this.leftPos.bottomRight.x += speed/2;
 
             //Right side 
-            this.rightPos.topLeft.y +=0.7;
-            this.rightPos.bottomLeft.y += 0.7;
-            this.rightPos.topLeft.x -=0.35;
-            this.rightPos.bottomLeft.x -= 0.35;
+            this.rightPos.topLeft.y +=speed;
+            this.rightPos.bottomLeft.y += speed;
+            this.rightPos.topLeft.x -=speed/2;
+            this.rightPos.bottomLeft.x -= speed/2;
 
         }
 

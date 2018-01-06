@@ -86783,6 +86783,30 @@ class river {
 exports.default = river;
 },{}],14:[function(require,module,exports) {
 module.exports="/dist/163089316c68b708b936b7f647e8f715.png";
+},{}],6:[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+const riverColor = exports.riverColor = "#639af2";
+const width = exports.width = 1000;
+const height = exports.height = 700;
+const lineWidth = exports.lineWidth = 15;
+
+// Top thresold line 
+const T1 = exports.T1 = height * 0.05,
+      T2 = exports.T2 = height * 0.15,
+      T3 = exports.T3 = height * 0.20;
+
+//Bottom thresold line
+const B1 = exports.B1 = height - height * 0.05,
+      B2 = exports.B2 = height - height * 0.15,
+      B3 = exports.B3 = height - height * 0.20;
+
+const roadColor = exports.roadColor = "#666666";
+
+const speedAnim = exports.speedAnim = 7;
 },{}],7:[function(require,module,exports) {
 "use strict";
 
@@ -86793,6 +86817,12 @@ Object.defineProperty(exports, "__esModule", {
 var _boat = require("../../assets/boat.png");
 
 var _boat2 = _interopRequireDefault(_boat);
+
+var _constants = require("../constants");
+
+var constants = _interopRequireWildcard(_constants);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -86832,17 +86862,14 @@ class boat {
       if (this.pos.y >= height + height * 0.2) {
         this.pos.y = 0 - height * 0.2;
       } else {
-        this.pos.y += 3;
+        this.pos.y += constants.speedAnim / 2;
       }
     }
-    console.log(this.pos.y + height * 0.2);
-    console.log("T2: " + T2);
     if (this.pos.y + height * 0.2 > T1) {
       T1Passed = true;
     }
     if (this.pos.y + height * 0.2 > T2) {
       T2Passed = true;
-      console.log("T2 passed");
     }
     if (this.pos.y + height * 0.2 > T3) {
       T3Passed = true;
@@ -86863,27 +86890,7 @@ class boat {
 
 }
 exports.default = boat;
-},{"../../assets/boat.png":14}],6:[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-const riverColor = exports.riverColor = "#639af2";
-const width = exports.width = 1000;
-const height = exports.height = 700;
-const lineWidth = exports.lineWidth = 15;
-
-// Top thresold line 
-const T1 = exports.T1 = height * 0.05,
-      T2 = exports.T2 = height * 0.15,
-      T3 = exports.T3 = height * 0.20;
-
-//Bottom thresold line
-const B1 = exports.B1 = height - height * 0.05,
-      B2 = exports.B2 = height - height * 0.15,
-      B3 = exports.B3 = height - height * 0.20;
-},{}],20:[function(require,module,exports) {
+},{"../../assets/boat.png":14,"../constants":6}],20:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86959,6 +86966,10 @@ const bottom = 0.58;
 const maxOpenHeight = 50;
 const maxOpenWidth = 25;
 
+const roadColor = constants.roadColor;
+
+const speed = constants.speedAnim / 10;
+
 class bridge {
 
   constructor() {
@@ -86978,7 +86989,7 @@ class bridge {
 
   show() {
 
-    p5.fill('#666666');
+    p5.fill(roadColor);
     p5.beginShape();
     p5.vertex(this.leftPos.topLeft.x, this.leftPos.topLeft.y);
     p5.vertex(this.leftPos.bottomLeft.x, this.leftPos.bottomLeft.y);
@@ -86986,7 +86997,7 @@ class bridge {
     p5.vertex(this.leftPos.topRight.x, this.leftPos.topRight.y);
     p5.endShape(p5.CLOSE);
 
-    p5.fill('#666666');
+    p5.fill(roadColor);
     p5.beginShape();
     p5.vertex(this.rightPos.topLeft.x, this.rightPos.topLeft.y);
     p5.vertex(this.rightPos.bottomLeft.x, this.rightPos.bottomLeft.y);
@@ -87022,30 +87033,30 @@ class bridge {
     if (bridgeOpen && this.leftPos.topRight.y >= height * top - maxOpenHeight) {
 
       //Left side 
-      this.leftPos.topRight.y -= 0.7;
-      this.leftPos.bottomRight.y -= 0.7;
-      this.leftPos.topRight.x -= 0.35;
-      this.leftPos.bottomRight.x -= 0.35;
+      this.leftPos.topRight.y -= speed;
+      this.leftPos.bottomRight.y -= speed;
+      this.leftPos.topRight.x -= speed / 2;
+      this.leftPos.bottomRight.x -= speed / 2;
 
       //Right side 
-      this.rightPos.topLeft.y -= 0.7;
-      this.rightPos.bottomLeft.y -= 0.7;
-      this.rightPos.topLeft.x += 0.35;
-      this.rightPos.bottomLeft.x += 0.35;
+      this.rightPos.topLeft.y -= speed;
+      this.rightPos.bottomLeft.y -= speed;
+      this.rightPos.topLeft.x += speed / 2;
+      this.rightPos.bottomLeft.x += speed / 2;
     } else if (!bridgeOpen && this.leftPos.topRight.y != this.leftPos.topLeft.y) {
 
       //Close bridge
       //Left side 
-      this.leftPos.topRight.y += 0.7;
-      this.leftPos.bottomRight.y += 0.7;
-      this.leftPos.topRight.x += 0.35;
-      this.leftPos.bottomRight.x += 0.35;
+      this.leftPos.topRight.y += speed;
+      this.leftPos.bottomRight.y += speed;
+      this.leftPos.topRight.x += speed / 2;
+      this.leftPos.bottomRight.x += speed / 2;
 
       //Right side 
-      this.rightPos.topLeft.y += 0.7;
-      this.rightPos.bottomLeft.y += 0.7;
-      this.rightPos.topLeft.x -= 0.35;
-      this.rightPos.bottomLeft.x -= 0.35;
+      this.rightPos.topLeft.y += speed;
+      this.rightPos.bottomLeft.y += speed;
+      this.rightPos.topLeft.x -= speed / 2;
+      this.rightPos.bottomLeft.x -= speed / 2;
     }
   }
 }

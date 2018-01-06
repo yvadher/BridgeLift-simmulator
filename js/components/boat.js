@@ -1,4 +1,5 @@
 import boatImg from '../../assets/boat.png';
+import * as constants from '../constants';
 
 const width = 1000;
 const height = 700;
@@ -36,17 +37,14 @@ export default class boat{
             if(this.pos.y >= height + height*0.2){
                 this.pos.y = 0-height*0.2;
             }else{
-                this.pos.y += 3;
+                this.pos.y += constants.speedAnim/2;
             }
         }
-        console.log(this.pos.y + height*0.2);
-        console.log("T2: "+ T2);
         if (this.pos.y + height*0.2 > T1){
             T1Passed = true;
         }
         if ( this.pos.y + height*0.2 > T2){
             T2Passed = true;
-            console.log("T2 passed");
         }
         if ( this.pos.y + height*0.2 > T3 ){
             T3Passed = true;
