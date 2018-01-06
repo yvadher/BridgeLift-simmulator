@@ -49,8 +49,23 @@ export default class bridge{
         p5.strokeWeight(3);
         p5.stroke('white');
        //Draw dashed line
-        var dLine = new dashLine(width/2 - (width*0.1), height/2, width/2, height/2 - 50, 10,10);
-        dLine.show();
+        var middlePoint = (this.leftPos.bottomLeft.y - this.leftPos.topLeft.y)/2;
+        var leftDasshedLine = new dashLine( 
+            (width/2 - (width*0.1)),
+            this.leftPos.topLeft.y + middlePoint, 
+            this.leftPos.topRight.x,
+            this.leftPos.topRight.y + middlePoint ,
+            10,5);
+
+        leftDasshedLine.show();
+
+        var rightDasshedLine = new dashLine( this.rightPos.topLeft.x, 
+            this.rightPos.topLeft.y + middlePoint ,  
+            this.rightPos.topRight.x, 
+            this.rightPos.topRight.y + middlePoint,
+            10,5);
+        rightDasshedLine.show();
+
         p5.strokeWeight(1);
     }
 
@@ -76,10 +91,5 @@ export default class bridge{
         if (bridgeClose && this.leftPos.topRight.y <= (height*top - maxOpenHeight) ){
 
         }
-
-        //Draw dashed line
-        var dLine = new dashLine(width/2 - (width*0.1), height/2, width/2, height/2, 10,2);
-        dLine.show();
-        p5.strokeWeight(1);
     }
 }

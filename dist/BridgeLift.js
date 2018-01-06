@@ -69,7 +69,7 @@ require = (function (modules, cache, entry) {
 
   // Override the current require with this new one
   return newRequire;
-})({12:[function(require,module,exports) {
+})({15:[function(require,module,exports) {
 'use strict'
 
 exports.byteLength = byteLength
@@ -185,7 +185,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],11:[function(require,module,exports) {
+},{}],16:[function(require,module,exports) {
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -271,14 +271,14 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],10:[function(require,module,exports) {
+},{}],17:[function(require,module,exports) {
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],8:[function(require,module,exports) {
+},{}],11:[function(require,module,exports) {
 
 var global = (1,eval)("this");
 /*!
@@ -2071,7 +2071,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":12,"ieee754":11,"isarray":10,"buffer":8}],9:[function(require,module,exports) {
+},{"base64-js":15,"ieee754":16,"isarray":17,"buffer":11}],12:[function(require,module,exports) {
 
 // shim for using process in browser
 var process = module.exports = {};
@@ -2258,7 +2258,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],6:[function(require,module,exports) {
+},{}],10:[function(require,module,exports) {
 var global = (1,eval)("this");
 var Buffer = require("buffer").Buffer;
 var process = require("process");
@@ -73668,7 +73668,7 @@ module.exports = p5;
 
 },{"../core/core":55,"./p5.Geometry":102}]},{},[46])(46)
 });
-},{"buffer":8,"process":9}],19:[function(require,module,exports) {
+},{"buffer":11,"process":12}],18:[function(require,module,exports) {
 /*! p5.sound.js v0.3.5 2017-07-28 */
 /**
  *  p5.sound extends p5 with <a href="http://caniuse.com/audio-api"
@@ -84190,7 +84190,7 @@ src_app = function () {
 }(sndcore, master, helpers, errorHandler, panner, soundfile, amplitude, fft, signal, oscillator, env, pulse, noise, audioin, filter, delay, reverb, metro, looper, compressor, soundRecorder, peakdetect, gain, distortion);
 }));
 
-},{"../p5":6}],18:[function(require,module,exports) {
+},{"../p5":10}],19:[function(require,module,exports) {
 /*! p5.dom.js v0.3.4 Aug 11, 2017 */
 /**
  * <p>The web is much more than just canvas and p5.dom makes it easy to interact
@@ -86728,7 +86728,7 @@ src_app = function () {
 
 }));
 
-},{"../p5":6}],13:[function(require,module,exports) {
+},{"../p5":10}],8:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86781,9 +86781,9 @@ class river {
   }
 }
 exports.default = river;
-},{}],17:[function(require,module,exports) {
+},{}],14:[function(require,module,exports) {
 module.exports="/dist/163089316c68b708b936b7f647e8f715.png";
-},{}],15:[function(require,module,exports) {
+},{}],7:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86844,7 +86844,7 @@ class boat {
 
 }
 exports.default = boat;
-},{"../../assets/boat.png":17}],14:[function(require,module,exports) {
+},{"../../assets/boat.png":14}],6:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86885,28 +86885,34 @@ class dashedLine {
     let numberOfLines = dist / (this.lineWidth + this.gape);
     // angle in radians
     let angleRadians = Math.atan2(this.endPoint.y - this.startPoint.y, this.endPoint.x - this.startPoint.x);
+    var y = this.startPoint.y;
 
     if (this.startPoint.y != this.endPoint.y) {
-      let y = this.startPoint.y;
 
       //For end point high than start point 
       if (this.startPoint.y < this.endPoint.y) {
+        let disty = this.startPoint.y - this.endPoint.y;
         for (let x = this.startPoint.x; x < this.endPoint.x; x += dist / numberOfLines) {
           p5.line(x, y, x + this.lineWidth * Math.cos(angleRadians), y + this.lineWidth * Math.sin(angleRadians));
-          y += dist / numberOfLines - this.gape;
+          y -= disty / numberOfLines;
         }
       } else if (this.startPoint.y > this.endPoint.y) {
+        let disty = this.endPoint.y - this.startPoint.y;
         for (let x = this.startPoint.x; x < this.endPoint.x; x += dist / numberOfLines) {
           p5.line(x, y, x + this.lineWidth * Math.cos(angleRadians), y + this.lineWidth * Math.sin(angleRadians));
-          y -= dist / numberOfLines - this.gape;
+          y += disty / numberOfLines;
         }
+      }
+    } else {
+
+      for (let x = this.startPoint.x; x < this.endPoint.x; x += dist / numberOfLines) {
+        p5.line(x, y, x + this.lineWidth * Math.cos(angleRadians), y + this.lineWidth * Math.sin(angleRadians));
       }
     }
   }
-
 }
 exports.default = dashedLine;
-},{"../constants":14}],16:[function(require,module,exports) {
+},{"../constants":6}],9:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86972,8 +86978,14 @@ class bridge {
     p5.strokeWeight(3);
     p5.stroke('white');
     //Draw dashed line
-    var dLine = new _dashedLine2.default(width / 2 - width * 0.1, height / 2, width / 2, height / 2 - 50, 10, 10);
-    dLine.show();
+    var middlePoint = (this.leftPos.bottomLeft.y - this.leftPos.topLeft.y) / 2;
+    var leftDasshedLine = new _dashedLine2.default(width / 2 - width * 0.1, this.leftPos.topLeft.y + middlePoint, this.leftPos.topRight.x, this.leftPos.topRight.y + middlePoint, 10, 5);
+
+    leftDasshedLine.show();
+
+    var rightDasshedLine = new _dashedLine2.default(this.rightPos.topLeft.x, this.rightPos.topLeft.y + middlePoint, this.rightPos.topRight.x, this.rightPos.topRight.y + middlePoint, 10, 5);
+    rightDasshedLine.show();
+
     p5.strokeWeight(1);
   }
 
@@ -86995,15 +87007,10 @@ class bridge {
     } else {}
 
     if (bridgeClose && this.leftPos.topRight.y <= height * top - maxOpenHeight) {}
-
-    //Draw dashed line
-    var dLine = new _dashedLine2.default(width / 2 - width * 0.1, height / 2, width / 2, height / 2, 10, 2);
-    dLine.show();
-    p5.strokeWeight(1);
   }
 }
 exports.default = bridge;
-},{"../constants":14,"../Methods/dashedLine":20}],4:[function(require,module,exports) {
+},{"../constants":6,"../Methods/dashedLine":20}],3:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -87078,7 +87085,7 @@ const sketch = p5 => {
     p5.background(constants.riverColor);
     river.show();
 
-    //bridge.update();
+    bridge.update();
     bridge.show();
 
     boat.update();
@@ -87088,7 +87095,7 @@ const sketch = p5 => {
 
 //Constants 
 exports.default = sketch;
-},{"p5":6,"p5/lib/addons/p5.sound":19,"p5/lib/addons/p5.dom":18,"./components/river":13,"./components/boat":15,"./components/bridge":16,"./constants":14}],7:[function(require,module,exports) {
+},{"p5":10,"p5/lib/addons/p5.sound":18,"p5/lib/addons/p5.dom":19,"./components/river":8,"./components/boat":7,"./components/bridge":9,"./constants":6}],13:[function(require,module,exports) {
 var bundleURL = null;
 function getBundleURLCached() {
   if (!bundleURL) {
@@ -87151,7 +87158,7 @@ function reloadCSS() {
 
 module.exports = reloadCSS;
 
-},{"./bundle-url":7}],3:[function(require,module,exports) {
+},{"./bundle-url":13}],4:[function(require,module,exports) {
 
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
@@ -87174,7 +87181,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // Initialize sketch
 new _p2.default(_sketch2.default);
-},{"p5":6,"./js/sketch":4,"./styles/main.css":3}],0:[function(require,module,exports) {
+},{"p5":10,"./js/sketch":3,"./styles/main.css":4}],0:[function(require,module,exports) {
 var global = (1, eval)('this');
 var OldModule = module.bundle.Module;
 function Module() {
@@ -87192,7 +87199,7 @@ function Module() {
 module.bundle.Module = Module;
 
 if (!module.bundle.parent && typeof WebSocket !== 'undefined') {
-  var ws = new WebSocket('ws://' + window.location.hostname + ':50916/');
+  var ws = new WebSocket('ws://' + window.location.hostname + ':54012/');
   ws.onmessage = function(event) {
     var data = JSON.parse(event.data);
 

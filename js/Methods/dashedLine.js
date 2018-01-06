@@ -12,24 +12,32 @@ export default class dashedLine{
         let numberOfLines = (dist)/ (this.lineWidth+this.gape);
         // angle in radians
         let angleRadians = Math.atan2(this.endPoint.y - this.startPoint.y, this.endPoint.x - this.startPoint.x);
+        var y = this.startPoint.y;
+
+        
+
         
         if (this.startPoint.y != this.endPoint.y){
-            let y = this.startPoint.y;
-
+            
             //For end point high than start point 
             if (this.startPoint.y < this.endPoint.y){
+                let disty = this.startPoint.y - this.endPoint.y;
                 for (let x= this.startPoint.x; x<this.endPoint.x; x+= dist/numberOfLines ){
                     p5.line(x, y, x + (this.lineWidth * Math.cos(angleRadians)), y + (this.lineWidth * Math.sin(angleRadians)) );
-                    y+=(dist/numberOfLines) - this.gape;
+                    y-=(disty/numberOfLines);
                 }
             }else if(this.startPoint.y > this.endPoint.y){
+                let disty = this.endPoint.y - this.startPoint.y;
                 for (let x= this.startPoint.x; x<this.endPoint.x; x+= dist/numberOfLines ){
                     p5.line(x, y, x + (this.lineWidth * Math.cos(angleRadians)), y + (this.lineWidth * Math.sin(angleRadians)) );
-                    y-=(dist/numberOfLines) - this.gape;
+                    y+=(disty/numberOfLines);
                 }
             }
-
+        }else{
+            
+            for (let x= this.startPoint.x; x<this.endPoint.x; x+= dist/numberOfLines ){
+                p5.line(x, y, x + (this.lineWidth * Math.cos(angleRadians)), y + (this.lineWidth * Math.sin(angleRadians)) );
+            }
         }
     }
-
 }

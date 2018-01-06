@@ -50,7 +50,7 @@ const sketch = (p5) => {
     p5.background(constants.riverColor);
     river.show();
 
-    //bridge.update();
+    bridge.update();
     bridge.show();
 
     boat.update();
