@@ -1,6 +1,6 @@
 export const riverColor = "#639af2";
 export const width = 1000;
-export const height = 800;
+export const height = 700;
 export const lineWidth = 15;
 
 // Top thresold line 

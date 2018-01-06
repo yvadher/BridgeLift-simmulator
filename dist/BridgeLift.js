@@ -6,6 +6,7 @@
 // anything defined in a previous bundle is accessed via the
 // orig method which is the require for previous bundles
 
+// eslint-disable-next-line no-global-assign
 require = (function (modules, cache, entry) {
   // Save the require from previous bundle to this closure if any
   var previousRequire = typeof require === "function" && require;
@@ -68,7 +69,7 @@ require = (function (modules, cache, entry) {
 
   // Override the current require with this new one
   return newRequire;
-})({17:[function(require,module,exports) {
+})({12:[function(require,module,exports) {
 'use strict'
 
 exports.byteLength = byteLength
@@ -184,7 +185,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],16:[function(require,module,exports) {
+},{}],11:[function(require,module,exports) {
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -270,7 +271,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],15:[function(require,module,exports) {
+},{}],10:[function(require,module,exports) {
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
@@ -2070,7 +2071,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":17,"ieee754":16,"isarray":15,"buffer":8}],9:[function(require,module,exports) {
+},{"base64-js":12,"ieee754":11,"isarray":10,"buffer":8}],9:[function(require,module,exports) {
 
 // shim for using process in browser
 var process = module.exports = {};
@@ -86727,7 +86728,7 @@ src_app = function () {
 
 }));
 
-},{"../p5":6}],12:[function(require,module,exports) {
+},{"../p5":6}],13:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86780,9 +86781,9 @@ class river {
   }
 }
 exports.default = river;
-},{}],14:[function(require,module,exports) {
+},{}],17:[function(require,module,exports) {
 module.exports="/dist/163089316c68b708b936b7f647e8f715.png";
-},{}],11:[function(require,module,exports) {
+},{}],15:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86843,15 +86844,89 @@ class boat {
 
 }
 exports.default = boat;
-},{"../../assets/boat.png":14}],13:[function(require,module,exports) {
+},{"../../assets/boat.png":17}],14:[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+const riverColor = exports.riverColor = "#639af2";
+const width = exports.width = 1000;
+const height = exports.height = 700;
+const lineWidth = exports.lineWidth = 15;
+
+// Top thresold line 
+const T1 = exports.T1 = height * 0.05,
+      T2 = exports.T2 = height * 0.15,
+      T3 = exports.T3 = height * 0.20;
+
+//Bottom thresold line
+const B1 = exports.B1 = height - height * 0.05,
+      B2 = exports.B2 = height - height * 0.15,
+      B3 = exports.B3 = height - height * 0.20;
+},{}],20:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-const width = 1000;
-const height = 700;
+var _constants = require("../constants");
+
+class dashedLine {
+  constructor(x1, y1, x2, y2, lineWidth, gape) {
+    this.startPoint = { x: x1, y: y1 };
+    this.endPoint = { x: x2, y: y2 };
+    this.lineWidth = lineWidth;
+    this.gape = gape;
+  }
+  show() {
+    let dist = p5.dist(this.startPoint.x, this.startPoint.y, this.endPoint.x, this.endPoint.y);
+    let numberOfLines = dist / (this.lineWidth + this.gape);
+    // angle in radians
+    let angleRadians = Math.atan2(this.endPoint.y - this.startPoint.y, this.endPoint.x - this.startPoint.x);
+
+    if (this.startPoint.y != this.endPoint.y) {
+      let y = this.startPoint.y;
+
+      //For end point high than start point 
+      if (this.startPoint.y < this.endPoint.y) {
+        for (let x = this.startPoint.x; x < this.endPoint.x; x += dist / numberOfLines) {
+          p5.line(x, y, x + this.lineWidth * Math.cos(angleRadians), y + this.lineWidth * Math.sin(angleRadians));
+          y += dist / numberOfLines - this.gape;
+        }
+      } else if (this.startPoint.y > this.endPoint.y) {
+        for (let x = this.startPoint.x; x < this.endPoint.x; x += dist / numberOfLines) {
+          p5.line(x, y, x + this.lineWidth * Math.cos(angleRadians), y + this.lineWidth * Math.sin(angleRadians));
+          y -= dist / numberOfLines - this.gape;
+        }
+      }
+    }
+  }
+
+}
+exports.default = dashedLine;
+},{"../constants":14}],16:[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _constants = require("../constants");
+
+var constants = _interopRequireWildcard(_constants);
+
+var _dashedLine = require("../Methods/dashedLine");
+
+var _dashedLine2 = _interopRequireDefault(_dashedLine);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+const width = constants.width;
+const height = constants.height;
 
 const top = 0.43;
 const bottom = 0.58;
@@ -86897,6 +86972,8 @@ class bridge {
     p5.strokeWeight(3);
     p5.stroke('white');
     //Draw dashed line
+    var dLine = new _dashedLine2.default(width / 2 - width * 0.1, height / 2, width / 2, height / 2 - 50, 10, 10);
+    dLine.show();
     p5.strokeWeight(1);
   }
 
@@ -86918,30 +86995,15 @@ class bridge {
     } else {}
 
     if (bridgeClose && this.leftPos.topRight.y <= height * top - maxOpenHeight) {}
+
+    //Draw dashed line
+    var dLine = new _dashedLine2.default(width / 2 - width * 0.1, height / 2, width / 2, height / 2, 10, 2);
+    dLine.show();
+    p5.strokeWeight(1);
   }
 }
 exports.default = bridge;
-},{}],10:[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-const riverColor = exports.riverColor = "#639af2";
-const width = exports.width = 1000;
-const height = exports.height = 800;
-const lineWidth = exports.lineWidth = 15;
-
-// Top thresold line 
-const T1 = exports.T1 = height * 0.05,
-      T2 = exports.T2 = height * 0.15,
-      T3 = exports.T3 = height * 0.20;
-
-//Bottom thresold line
-const B1 = exports.B1 = height - height * 0.05,
-      B2 = exports.B2 = height - height * 0.15,
-      B3 = exports.B3 = height - height * 0.20;
-},{}],3:[function(require,module,exports) {
+},{"../constants":14,"../Methods/dashedLine":20}],4:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -87016,7 +87078,7 @@ const sketch = p5 => {
     p5.background(constants.riverColor);
     river.show();
 
-    bridge.update();
+    //bridge.update();
     bridge.show();
 
     boat.update();
@@ -87026,7 +87088,7 @@ const sketch = p5 => {
 
 //Constants 
 exports.default = sketch;
-},{"p5":6,"p5/lib/addons/p5.sound":19,"p5/lib/addons/p5.dom":18,"./components/river":12,"./components/boat":11,"./components/bridge":13,"./constants":10}],7:[function(require,module,exports) {
+},{"p5":6,"p5/lib/addons/p5.sound":19,"p5/lib/addons/p5.dom":18,"./components/river":13,"./components/boat":15,"./components/bridge":16,"./constants":14}],7:[function(require,module,exports) {
 var bundleURL = null;
 function getBundleURLCached() {
   if (!bundleURL) {
@@ -87089,7 +87151,7 @@ function reloadCSS() {
 
 module.exports = reloadCSS;
 
-},{"./bundle-url":7}],4:[function(require,module,exports) {
+},{"./bundle-url":7}],3:[function(require,module,exports) {
 
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
@@ -87112,7 +87174,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // Initialize sketch
 new _p2.default(_sketch2.default);
-},{"p5":6,"./js/sketch":3,"./styles/main.css":4}],0:[function(require,module,exports) {
+},{"p5":6,"./js/sketch":4,"./styles/main.css":3}],0:[function(require,module,exports) {
 var global = (1, eval)('this');
 var OldModule = module.bundle.Module;
 function Module() {
@@ -87130,7 +87192,7 @@ function Module() {
 module.bundle.Module = Module;
 
 if (!module.bundle.parent && typeof WebSocket !== 'undefined') {
-  var ws = new WebSocket('ws://localhost:56441/');
+  var ws = new WebSocket('ws://' + window.location.hostname + ':50916/');
   ws.onmessage = function(event) {
     var data = JSON.parse(event.data);
 

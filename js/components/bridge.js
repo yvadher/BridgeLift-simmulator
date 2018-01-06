@@ -1,6 +1,9 @@
 
-const width = 1000;
-const height = 700;
+import * as constants from '../constants';
+import dashLine from '../Methods/dashedLine';
+
+const width = constants.width;
+const height = constants.height;
 
 const top = 0.43;
 const bottom = 0.58;
@@ -46,6 +49,8 @@ export default class bridge{
         p5.strokeWeight(3);
         p5.stroke('white');
        //Draw dashed line
+        var dLine = new dashLine(width/2 - (width*0.1), height/2, width/2, height/2 - 50, 10,10);
+        dLine.show();
         p5.strokeWeight(1);
     }
 
@@ -71,5 +76,10 @@ export default class bridge{
         if (bridgeClose && this.leftPos.topRight.y <= (height*top - maxOpenHeight) ){
 
         }
+
+        //Draw dashed line
+        var dLine = new dashLine(width/2 - (width*0.1), height/2, width/2, height/2, 10,2);
+        dLine.show();
+        p5.strokeWeight(1);
     }
 }
