@@ -9,6 +9,7 @@ import Bridge from './components/bridge';
 import Road from './components/road';
 import Car from './components/car';
 
+window.emergency = false;
 //Constants 
 import * as constants from "./constants";
 
@@ -16,13 +17,15 @@ import * as constants from "./constants";
 // Sketch scope
 const sketch = (p5) => {
 
+  
+  
   // Variables scoped within p5
   const canvasWidth = 1000;
   const canvasHeight = 700;
 
   // make library globally available
   window.p5 = p5;
-  window.emergency = false;
+  
   window.bridgeOpen = false;
 
   window.bridgeCarSignal = false;
@@ -45,6 +48,7 @@ const sketch = (p5) => {
   // Setup function
   p5.setup = () => {
     let canvas = p5.createCanvas(canvasWidth, canvasHeight);
+    canvas.parent('canvas');
     p5.frameRate(10);
 
     // Your stuff goes in here

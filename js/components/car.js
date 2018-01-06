@@ -30,8 +30,7 @@ export default class car{
             this.pos.y = height/2 + 8;
             p5.image(this.imgSportsCar, this.pos.x, this.pos.y,this.carWidth, this.carHeight );
         }else if (this.dir == 'left'){
-            this.pos.y = height*top + 10;
-            console.log(this.pos.x);            
+            this.pos.y = height*top + 10;          
             p5.image(this.imgPoliceCar, this.pos.x, this.pos.y,this.carWidth, this.carHeight );
         }
     }
@@ -39,7 +38,7 @@ export default class car{
         if (this.dir == 'right'){
             var carRight = this.pos.x + this.carWidth;
             if ( bridgeCarSignal && (carRight > this.signalLeft - 10) && (carRight < this.signalLeft + 5)){
-                console.log("stop!!");
+                
             }else {
                 this.pos.x += 4;
             }
@@ -50,7 +49,7 @@ export default class car{
         }else if (this.dir == 'left'){
             var carLeft = this.pos.x ;
             if ( bridgeCarSignal && (carLeft < this.signalRight + 10) && (carLeft > this.signalRight - 5)){
-                console.log("stop!!");
+               
             }else {
                 this.pos.x -= 4;
             }
