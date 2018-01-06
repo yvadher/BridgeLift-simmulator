@@ -15,4 +15,7 @@ export const B1 = height - height*0.05,
 
 export const roadColor= "#666666";
 
-export const speedAnim = 7;
+export const speedAnim = 14;
+
+export const leftRoad = 0.4;
+export const rightRoad = 0.4;

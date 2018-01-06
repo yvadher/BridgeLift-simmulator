@@ -6,6 +6,7 @@ import 'p5/lib/addons/p5.dom';
 import River from './components/river';
 import Boat from './components/boat';
 import Bridge from './components/bridge';
+import Road from './components/road';
 
 //Constants 
 import * as constants from "./constants";
@@ -34,6 +35,7 @@ const sketch = (p5) => {
   var river = new River();
   var boat = new Boat();
   var bridge = new Bridge();
+  var road = new Road();
 
   // Setup function
   p5.setup = () => {
@@ -50,6 +52,8 @@ const sketch = (p5) => {
   p5.draw = () => {
     p5.background(constants.riverColor);
     river.show();
+
+    road.show();
 
     bridge.update();
     bridge.show();

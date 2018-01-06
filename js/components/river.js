@@ -34,6 +34,7 @@ export default class river {
     }
 
     drawThresoldLine(){
+        p5.strokeWeight(3);
         p5.stroke('green');
         p5.line(this.pos.x, T1, this.pos.x + width*0.2, T1);
         p5.line(this.pos.x, T2, this.pos.x + width*0.2, T2);

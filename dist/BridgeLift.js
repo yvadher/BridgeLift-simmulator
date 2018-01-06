@@ -69,7 +69,7 @@ require = (function (modules, cache, entry) {
 
   // Override the current require with this new one
   return newRequire;
-})({15:[function(require,module,exports) {
+})({16:[function(require,module,exports) {
 'use strict'
 
 exports.byteLength = byteLength
@@ -185,7 +185,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],16:[function(require,module,exports) {
+},{}],17:[function(require,module,exports) {
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -271,14 +271,14 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],17:[function(require,module,exports) {
+},{}],18:[function(require,module,exports) {
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],11:[function(require,module,exports) {
+},{}],12:[function(require,module,exports) {
 
 var global = (1,eval)("this");
 /*!
@@ -2071,7 +2071,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":15,"ieee754":16,"isarray":17,"buffer":11}],12:[function(require,module,exports) {
+},{"base64-js":16,"ieee754":17,"isarray":18,"buffer":12}],13:[function(require,module,exports) {
 
 // shim for using process in browser
 var process = module.exports = {};
@@ -73668,7 +73668,7 @@ module.exports = p5;
 
 },{"../core/core":55,"./p5.Geometry":102}]},{},[46])(46)
 });
-},{"buffer":11,"process":12}],18:[function(require,module,exports) {
+},{"buffer":12,"process":13}],19:[function(require,module,exports) {
 /*! p5.sound.js v0.3.5 2017-07-28 */
 /**
  *  p5.sound extends p5 with <a href="http://caniuse.com/audio-api"
@@ -84190,7 +84190,7 @@ src_app = function () {
 }(sndcore, master, helpers, errorHandler, panner, soundfile, amplitude, fft, signal, oscillator, env, pulse, noise, audioin, filter, delay, reverb, metro, looper, compressor, soundRecorder, peakdetect, gain, distortion);
 }));
 
-},{"../p5":10}],19:[function(require,module,exports) {
+},{"../p5":10}],20:[function(require,module,exports) {
 /*! p5.dom.js v0.3.4 Aug 11, 2017 */
 /**
  * <p>The web is much more than just canvas and p5.dom makes it easy to interact
@@ -86728,7 +86728,7 @@ src_app = function () {
 
 }));
 
-},{"../p5":10}],8:[function(require,module,exports) {
+},{"../p5":10}],7:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86770,6 +86770,7 @@ class river {
   }
 
   drawThresoldLine() {
+    p5.strokeWeight(3);
     p5.stroke('green');
     p5.line(this.pos.x, T1, this.pos.x + width * 0.2, T1);
     p5.line(this.pos.x, T2, this.pos.x + width * 0.2, T2);
@@ -86806,8 +86807,11 @@ const B1 = exports.B1 = height - height * 0.05,
 
 const roadColor = exports.roadColor = "#666666";
 
-const speedAnim = exports.speedAnim = 7;
-},{}],7:[function(require,module,exports) {
+const speedAnim = exports.speedAnim = 14;
+
+const leftRoad = exports.leftRoad = 0.4;
+const rightRoad = exports.rightRoad = 0.4;
+},{}],8:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86890,7 +86894,7 @@ class boat {
 
 }
 exports.default = boat;
-},{"../../assets/boat.png":14,"../constants":6}],20:[function(require,module,exports) {
+},{"../../assets/boat.png":14,"../constants":6}],15:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -87061,7 +87065,62 @@ class bridge {
   }
 }
 exports.default = bridge;
-},{"../constants":6,"../Methods/dashedLine":20}],3:[function(require,module,exports) {
+},{"../constants":6,"../Methods/dashedLine":15}],21:[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _constants = require("../constants");
+
+var constants = _interopRequireWildcard(_constants);
+
+var _dashedLine = require("../Methods/dashedLine");
+
+var _dashedLine2 = _interopRequireDefault(_dashedLine);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+const width = constants.width;
+const height = constants.height;
+
+const top = 0.43;
+const bottom = 0.58;
+
+class road {
+  constructor() {
+    this.startLeft = { x: 0, y: height * top };
+    this.endLeft = { x: width / 2 - width * 0.1, y: height * top };
+
+    this.startRight = { x: width / 2 + width * 0.1, y: height * top };
+    this.endRight = { x: width, y: height * top };
+  }
+
+  show() {
+    p5.fill(_constants.roadColor);
+    p5.stroke('black');
+    p5.strokeWeight(1);
+    p5.rect(this.startLeft.x, this.startLeft.y, width * _constants.leftRoad, height * bottom - height * top);
+    p5.rect(this.startRight.x, this.startRight.y, width * _constants.leftRoad, height * bottom - height * top);
+
+    p5.strokeWeight(3);
+    p5.stroke('white');
+
+    var line = new _dashedLine2.default(this.startLeft.x, height / 2 + 3, this.endLeft.x, height / 2 + 3, 10, 5);
+    line.show();
+
+    var line = new _dashedLine2.default(this.startRight.x, height / 2 + 3, this.endRight.x, height / 2 + 3, 10, 5);
+    line.show();
+    p5.stroke('Black');
+    p5.strokeWeight(1);
+  }
+
+}
+exports.default = road;
+},{"../constants":6,"../Methods/dashedLine":15}],3:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -87088,6 +87147,10 @@ var _bridge = require("./components/bridge");
 
 var _bridge2 = _interopRequireDefault(_bridge);
 
+var _road = require("./components/road");
+
+var _road2 = _interopRequireDefault(_road);
+
 var _constants = require("./constants");
 
 var constants = _interopRequireWildcard(_constants);
@@ -87097,9 +87160,6 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Sketch scope
-
-
-//Import components
 const sketch = p5 => {
 
   // Variables scoped within p5
@@ -87121,6 +87181,7 @@ const sketch = p5 => {
   var river = new _river2.default();
   var boat = new _boat2.default();
   var bridge = new _bridge2.default();
+  var road = new _road2.default();
 
   // Setup function
   p5.setup = () => {
@@ -87137,6 +87198,8 @@ const sketch = p5 => {
     p5.background(constants.riverColor);
     river.show();
 
+    road.show();
+
     bridge.update();
     bridge.show();
 
@@ -87146,8 +87209,11 @@ const sketch = p5 => {
 };
 
 //Constants 
+
+
+//Import components
 exports.default = sketch;
-},{"p5":10,"p5/lib/addons/p5.sound":18,"p5/lib/addons/p5.dom":19,"./components/river":8,"./components/boat":7,"./components/bridge":9,"./constants":6}],13:[function(require,module,exports) {
+},{"p5":10,"p5/lib/addons/p5.sound":19,"p5/lib/addons/p5.dom":20,"./components/river":7,"./components/boat":8,"./components/bridge":9,"./components/road":21,"./constants":6}],11:[function(require,module,exports) {
 var bundleURL = null;
 function getBundleURLCached() {
   if (!bundleURL) {
@@ -87210,7 +87276,7 @@ function reloadCSS() {
 
 module.exports = reloadCSS;
 
-},{"./bundle-url":13}],4:[function(require,module,exports) {
+},{"./bundle-url":11}],4:[function(require,module,exports) {
 
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
@@ -87251,7 +87317,7 @@ function Module() {
 module.bundle.Module = Module;
 
 if (!module.bundle.parent && typeof WebSocket !== 'undefined') {
-  var ws = new WebSocket('ws://' + window.location.hostname + ':54012/');
+  var ws = new WebSocket('ws://' + window.location.hostname + ':63205/');
   ws.onmessage = function(event) {
     var data = JSON.parse(event.data);
 
