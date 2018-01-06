@@ -21,13 +21,14 @@ const sketch = (p5) => {
   // make library globally available
   window.p5 = p5;
   window.emergency = false;
-  window.bridgeOpen = true;
-  window.bridgeClose = false;
+  window.bridgeOpen = false;
 
+  window.T1Passed = false;
+  window.T2Passed = false;
+  window.T3Passed = false;
 
-  setTimeout(()=> {
-    emergency = true;
-  }, 5000);
+  window.B1Passed = false;
+
 
   //All golbal objects var
   var river = new River();

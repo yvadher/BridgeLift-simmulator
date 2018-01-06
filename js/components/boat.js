@@ -36,8 +36,27 @@ export default class boat{
             if(this.pos.y >= height + height*0.2){
                 this.pos.y = 0-height*0.2;
             }else{
-                this.pos.y += 10;
+                this.pos.y += 3;
             }
+        }
+        console.log(this.pos.y + height*0.2);
+        console.log("T2: "+ T2);
+        if (this.pos.y + height*0.2 > T1){
+            T1Passed = true;
+        }
+        if ( this.pos.y + height*0.2 > T2){
+            T2Passed = true;
+            console.log("T2 passed");
+        }
+        if ( this.pos.y + height*0.2 > T3 ){
+            T3Passed = true;
+        }
+        if (this.pos.y + height*0.2 > B3){
+            B1Passed = true;
+            //Set all others Ts to false 
+            T1Passed = false;
+            T2Passed = false;
+            T3Passed = false;
         }
     }
 

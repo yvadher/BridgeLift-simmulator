@@ -1,6 +1,7 @@
 
 import * as constants from '../constants';
 import dashLine from '../Methods/dashedLine';
+import { B1 } from '../constants';
 
 const width = constants.width;
 const height = constants.height;
@@ -70,6 +71,15 @@ export default class bridge{
     }
 
     update(){
+
+        if (T2Passed){
+            bridgeOpen = true;
+            B1Passed = false;
+        } 
+
+        if (B1Passed) {
+            bridgeOpen = false;
+        }
         //brodgeOpen global variable
         if(bridgeOpen && this.leftPos.topRight.y >= (height*top - maxOpenHeight ) ){
             
@@ -84,12 +94,23 @@ export default class bridge{
             this.rightPos.bottomLeft.y -= 0.7;
             this.rightPos.topLeft.x +=0.35;
             this.rightPos.bottomLeft.x += 0.35;
-        }else {
+
+        }else if ( (!bridgeOpen) && (this.leftPos.topRight.y != this.leftPos.topLeft.y)) {
+            
+            //Close bridge
+            //Left side 
+            this.leftPos.topRight.y +=0.7;
+            this.leftPos.bottomRight.y += 0.7;
+            this.leftPos.topRight.x +=0.35;
+            this.leftPos.bottomRight.x += 0.35;
+
+            //Right side 
+            this.rightPos.topLeft.y +=0.7;
+            this.rightPos.bottomLeft.y += 0.7;
+            this.rightPos.topLeft.x -=0.35;
+            this.rightPos.bottomLeft.x -= 0.35;
 
         }
 
-        if (bridgeClose && this.leftPos.topRight.y <= (height*top - maxOpenHeight) ){
-
-        }
     }
 }

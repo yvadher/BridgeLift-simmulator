@@ -86832,8 +86832,27 @@ class boat {
       if (this.pos.y >= height + height * 0.2) {
         this.pos.y = 0 - height * 0.2;
       } else {
-        this.pos.y += 10;
+        this.pos.y += 3;
       }
+    }
+    console.log(this.pos.y + height * 0.2);
+    console.log("T2: " + T2);
+    if (this.pos.y + height * 0.2 > T1) {
+      T1Passed = true;
+    }
+    if (this.pos.y + height * 0.2 > T2) {
+      T2Passed = true;
+      console.log("T2 passed");
+    }
+    if (this.pos.y + height * 0.2 > T3) {
+      T3Passed = true;
+    }
+    if (this.pos.y + height * 0.2 > B3) {
+      B1Passed = true;
+      //Set all others Ts to false 
+      T1Passed = false;
+      T2Passed = false;
+      T3Passed = false;
     }
   }
 
@@ -86990,6 +87009,15 @@ class bridge {
   }
 
   update() {
+
+    if (T2Passed) {
+      bridgeOpen = true;
+      B1Passed = false;
+    }
+
+    if (B1Passed) {
+      bridgeOpen = false;
+    }
     //brodgeOpen global variable
     if (bridgeOpen && this.leftPos.topRight.y >= height * top - maxOpenHeight) {
 
@@ -87004,9 +87032,21 @@ class bridge {
       this.rightPos.bottomLeft.y -= 0.7;
       this.rightPos.topLeft.x += 0.35;
       this.rightPos.bottomLeft.x += 0.35;
-    } else {}
+    } else if (!bridgeOpen && this.leftPos.topRight.y != this.leftPos.topLeft.y) {
 
-    if (bridgeClose && this.leftPos.topRight.y <= height * top - maxOpenHeight) {}
+      //Close bridge
+      //Left side 
+      this.leftPos.topRight.y += 0.7;
+      this.leftPos.bottomRight.y += 0.7;
+      this.leftPos.topRight.x += 0.35;
+      this.leftPos.bottomRight.x += 0.35;
+
+      //Right side 
+      this.rightPos.topLeft.y += 0.7;
+      this.rightPos.bottomLeft.y += 0.7;
+      this.rightPos.topLeft.x -= 0.35;
+      this.rightPos.bottomLeft.x -= 0.35;
+    }
   }
 }
 exports.default = bridge;
@@ -87058,12 +87098,13 @@ const sketch = p5 => {
   // make library globally available
   window.p5 = p5;
   window.emergency = false;
-  window.bridgeOpen = true;
-  window.bridgeClose = false;
+  window.bridgeOpen = false;
 
-  setTimeout(() => {
-    emergency = true;
-  }, 5000);
+  window.T1Passed = false;
+  window.T2Passed = false;
+  window.T3Passed = false;
+
+  window.B1Passed = false;
 
   //All golbal objects var
   var river = new _river2.default();
