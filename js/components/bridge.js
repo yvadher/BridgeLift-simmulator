@@ -80,8 +80,14 @@ export default class bridge{
             B1Passed = false;
         } 
 
+        if (T1Passed){
+            bridgeCarSignal = true;
+        }
         if (B1Passed) {
             bridgeOpen = false;
+        }
+        if (B3Passed){
+            bridgeCarSignal = false;
         }
         //brodgeOpen global variable
         if(bridgeOpen && this.leftPos.topRight.y >= (height*top - maxOpenHeight ) ){

@@ -15,7 +15,6 @@ const B3 = height - height*0.20;
 export default class boat{
     constructor(){
         this.img = p5.loadImage(boatImg);
-        console.log("Image loaded");
         this.pos = { x: (width/2 - (width*0.05)), y: 0 - height*0.2};
     }
 
@@ -49,6 +48,8 @@ export default class boat{
         if ( this.pos.y + height*0.2 > T3 ){
             T3Passed = true;
         }
+
+        
         if (this.pos.y + height*0.2 > B3){
             B1Passed = true;
             //Set all others Ts to false 
@@ -56,6 +57,13 @@ export default class boat{
             T2Passed = false;
             T3Passed = false;
         }
+
+        if (this.pos.y + height*0.2 > B1){
+            B3Passed= true;
+        }else {
+            B3Passed = false;
+        }
+
     }
 
     //Get current location

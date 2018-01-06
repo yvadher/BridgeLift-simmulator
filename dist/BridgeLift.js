@@ -69,7 +69,7 @@ require = (function (modules, cache, entry) {
 
   // Override the current require with this new one
   return newRequire;
-})({16:[function(require,module,exports) {
+})({20:[function(require,module,exports) {
 'use strict'
 
 exports.byteLength = byteLength
@@ -185,7 +185,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],17:[function(require,module,exports) {
+},{}],21:[function(require,module,exports) {
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -271,14 +271,14 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],18:[function(require,module,exports) {
+},{}],22:[function(require,module,exports) {
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],12:[function(require,module,exports) {
+},{}],14:[function(require,module,exports) {
 
 var global = (1,eval)("this");
 /*!
@@ -2071,7 +2071,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":16,"ieee754":17,"isarray":18,"buffer":12}],13:[function(require,module,exports) {
+},{"base64-js":20,"ieee754":21,"isarray":22,"buffer":14}],13:[function(require,module,exports) {
 
 // shim for using process in browser
 var process = module.exports = {};
@@ -2258,7 +2258,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],10:[function(require,module,exports) {
+},{}],12:[function(require,module,exports) {
 var global = (1,eval)("this");
 var Buffer = require("buffer").Buffer;
 var process = require("process");
@@ -73668,7 +73668,7 @@ module.exports = p5;
 
 },{"../core/core":55,"./p5.Geometry":102}]},{},[46])(46)
 });
-},{"buffer":12,"process":13}],19:[function(require,module,exports) {
+},{"buffer":14,"process":13}],23:[function(require,module,exports) {
 /*! p5.sound.js v0.3.5 2017-07-28 */
 /**
  *  p5.sound extends p5 with <a href="http://caniuse.com/audio-api"
@@ -84190,7 +84190,7 @@ src_app = function () {
 }(sndcore, master, helpers, errorHandler, panner, soundfile, amplitude, fft, signal, oscillator, env, pulse, noise, audioin, filter, delay, reverb, metro, looper, compressor, soundRecorder, peakdetect, gain, distortion);
 }));
 
-},{"../p5":10}],20:[function(require,module,exports) {
+},{"../p5":12}],24:[function(require,module,exports) {
 /*! p5.dom.js v0.3.4 Aug 11, 2017 */
 /**
  * <p>The web is much more than just canvas and p5.dom makes it easy to interact
@@ -86728,7 +86728,7 @@ src_app = function () {
 
 }));
 
-},{"../p5":10}],7:[function(require,module,exports) {
+},{"../p5":12}],7:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86782,7 +86782,7 @@ class river {
   }
 }
 exports.default = river;
-},{}],14:[function(require,module,exports) {
+},{}],16:[function(require,module,exports) {
 module.exports="/dist/163089316c68b708b936b7f647e8f715.png";
 },{}],6:[function(require,module,exports) {
 "use strict";
@@ -86844,7 +86844,6 @@ const B3 = height - height * 0.20;
 class boat {
   constructor() {
     this.img = p5.loadImage(_boat2.default);
-    console.log("Image loaded");
     this.pos = { x: width / 2 - width * 0.05, y: 0 - height * 0.2 };
   }
 
@@ -86878,12 +86877,19 @@ class boat {
     if (this.pos.y + height * 0.2 > T3) {
       T3Passed = true;
     }
+
     if (this.pos.y + height * 0.2 > B3) {
       B1Passed = true;
       //Set all others Ts to false 
       T1Passed = false;
       T2Passed = false;
       T3Passed = false;
+    }
+
+    if (this.pos.y + height * 0.2 > B1) {
+      B3Passed = true;
+    } else {
+      B3Passed = false;
     }
   }
 
@@ -86894,7 +86900,7 @@ class boat {
 
 }
 exports.default = boat;
-},{"../../assets/boat.png":14,"../constants":6}],15:[function(require,module,exports) {
+},{"../../assets/boat.png":16,"../constants":6}],19:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -87030,8 +87036,14 @@ class bridge {
       B1Passed = false;
     }
 
+    if (T1Passed) {
+      bridgeCarSignal = true;
+    }
     if (B1Passed) {
       bridgeOpen = false;
+    }
+    if (B3Passed) {
+      bridgeCarSignal = false;
     }
     //brodgeOpen global variable
     if (bridgeOpen && this.leftPos.topRight.y >= height * top - maxOpenHeight) {
@@ -87065,7 +87077,7 @@ class bridge {
   }
 }
 exports.default = bridge;
-},{"../constants":6,"../Methods/dashedLine":15}],21:[function(require,module,exports) {
+},{"../constants":6,"../Methods/dashedLine":19}],10:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -87089,6 +87101,9 @@ const height = constants.height;
 
 const top = 0.43;
 const bottom = 0.58;
+
+const yellowLineSpacing = 45;
+const yellowLineStrokWeight = 3;
 
 class road {
   constructor() {
@@ -87114,13 +87129,142 @@ class road {
 
     var line = new _dashedLine2.default(this.startRight.x, height / 2 + 3, this.endRight.x, height / 2 + 3, 10, 5);
     line.show();
-    p5.stroke('Black');
+
+    p5.stroke('#FEFE00');
+    //Top yellow line  (LEFT SIDE)
+    p5.line(this.startLeft.x, height / 2 - yellowLineSpacing + yellowLineStrokWeight, this.endLeft.x, height / 2 - yellowLineSpacing + yellowLineStrokWeight);
+    //Bottom yellow line (LEFT SIDE)
+    p5.line(this.startLeft.x, height / 2 + yellowLineSpacing + yellowLineStrokWeight, this.endLeft.x, height / 2 + yellowLineSpacing);
+
+    //Right side 
+    //Top Yellow line
+    p5.line(this.startRight.x, height / 2 - yellowLineSpacing + yellowLineStrokWeight, this.endRight.x, height / 2 - yellowLineSpacing + yellowLineStrokWeight);
+    p5.line(this.startRight.x, height / 2 + yellowLineSpacing + yellowLineStrokWeight, this.endRight.x, height / 2 + yellowLineSpacing + yellowLineStrokWeight);
+
+    p5.strokeWeight(4);
+
+    if (bridgeCarSignal) {
+      p5.stroke('red');
+    } else {
+      p5.stroke('green');
+    }
+
+    //vertical signal line
+    p5.line(this.endLeft.x - 20, height * top, this.endLeft.x - 20, height * bottom);
+    p5.line(this.startRight.x + 20, height * top, this.startRight.x + 20, height * bottom);
+
+    p5.stroke('black');
     p5.strokeWeight(1);
+
+    //road Piller 1 
+    piller(width * 0.1);
+    piller(width * 0.3);
+    piller(width * 0.7);
+    piller(width * 0.9);
   }
 
 }
-exports.default = road;
-},{"../constants":6,"../Methods/dashedLine":15}],3:[function(require,module,exports) {
+
+exports.default = road; //Make a piller at perticular point
+
+function piller(strPiller) {
+  p5.fill('#404040');
+  p5.beginShape();
+  p5.vertex(strPiller, height * bottom);
+  p5.vertex(strPiller + 15, height * bottom + 30);
+  p5.vertex(strPiller + 15, height * bottom + 60);
+  p5.vertex(strPiller + 35, height * bottom + 60);
+  p5.vertex(strPiller + 35, height * bottom + 30);
+  p5.vertex(strPiller + 50, height * bottom);
+  p5.endShape(p5.CLOSE);
+}
+},{"../constants":6,"../Methods/dashedLine":19}],18:[function(require,module,exports) {
+module.exports="/dist/f221f261c5b22758cd7fe28c1cf48e58.png";
+},{}],17:[function(require,module,exports) {
+module.exports="/dist/6fcc83e448eb6aac48bcdf3c6aa4e64a.png";
+},{}],11:[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _constants = require("../constants");
+
+var constants = _interopRequireWildcard(_constants);
+
+var _police = require("../../assets/police.png");
+
+var _police2 = _interopRequireDefault(_police);
+
+var _sportsCar = require("../../assets/sports-car.png");
+
+var _sportsCar2 = _interopRequireDefault(_sportsCar);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+const width = constants.width;
+const height = constants.height;
+
+const top = 0.43;
+const bottom = 0.58;
+
+class car {
+  constructor(direction) {
+    this.dir = direction;
+
+    this.imgPoliceCar = p5.loadImage(_police2.default);
+    this.imgSportsCar = p5.loadImage(_sportsCar2.default);
+    this.pos = { x: 0, y: height / 2 + 8 };
+    this.carWidth = 60;
+    this.carHeight = 35;
+    if (this.dir == 'left') this.pos.x = width;
+
+    this.carRight = this.pos.x + this.carWidth;
+    this.signalLeft = width / 2 - width * 0.1 - 20;
+    this.signalRight = width / 2 + width * 0.1 + 20;
+  }
+
+  show() {
+    if (this.dir == 'right') {
+      this.pos.y = height / 2 + 8;
+      p5.image(this.imgSportsCar, this.pos.x, this.pos.y, this.carWidth, this.carHeight);
+    } else if (this.dir == 'left') {
+      this.pos.y = height * top + 10;
+      console.log(this.pos.x);
+      p5.image(this.imgPoliceCar, this.pos.x, this.pos.y, this.carWidth, this.carHeight);
+    }
+  }
+  update() {
+    if (this.dir == 'right') {
+      var carRight = this.pos.x + this.carWidth;
+      if (bridgeCarSignal && carRight > this.signalLeft - 10 && carRight < this.signalLeft + 5) {
+        console.log("stop!!");
+      } else {
+        this.pos.x += 4;
+      }
+
+      if (carRight > width) {
+        this.pos.x = -50;
+      }
+    } else if (this.dir == 'left') {
+      var carLeft = this.pos.x;
+      if (bridgeCarSignal && carLeft < this.signalRight + 10 && carLeft > this.signalRight - 5) {
+        console.log("stop!!");
+      } else {
+        this.pos.x -= 4;
+      }
+
+      if (carLeft < 0) {
+        this.pos.x = width + 50;
+      }
+    }
+  }
+}
+exports.default = car;
+},{"../constants":6,"../../assets/police.png":18,"../../assets/sports-car.png":17}],3:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -87151,6 +87295,10 @@ var _road = require("./components/road");
 
 var _road2 = _interopRequireDefault(_road);
 
+var _car = require("./components/car");
+
+var _car2 = _interopRequireDefault(_car);
+
 var _constants = require("./constants");
 
 var constants = _interopRequireWildcard(_constants);
@@ -87160,6 +87308,9 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Sketch scope
+
+
+//Import components
 const sketch = p5 => {
 
   // Variables scoped within p5
@@ -87171,18 +87322,22 @@ const sketch = p5 => {
   window.emergency = false;
   window.bridgeOpen = false;
 
+  window.bridgeCarSignal = false;
+
   window.T1Passed = false;
   window.T2Passed = false;
   window.T3Passed = false;
 
   window.B1Passed = false;
+  window.B3Passed = false;
 
   //All golbal objects var
   var river = new _river2.default();
   var boat = new _boat2.default();
   var bridge = new _bridge2.default();
   var road = new _road2.default();
-
+  var carRight = new _car2.default('right');
+  var carLeft = new _car2.default('left');
   // Setup function
   p5.setup = () => {
     let canvas = p5.createCanvas(canvasWidth, canvasHeight);
@@ -87205,15 +87360,18 @@ const sketch = p5 => {
 
     boat.update();
     boat.show();
+
+    carRight.show();
+    carRight.update();
+
+    carLeft.show();
+    carLeft.update();
   };
 };
 
 //Constants 
-
-
-//Import components
 exports.default = sketch;
-},{"p5":10,"p5/lib/addons/p5.sound":19,"p5/lib/addons/p5.dom":20,"./components/river":7,"./components/boat":8,"./components/bridge":9,"./components/road":21,"./constants":6}],11:[function(require,module,exports) {
+},{"p5":12,"p5/lib/addons/p5.sound":23,"p5/lib/addons/p5.dom":24,"./components/river":7,"./components/boat":8,"./components/bridge":9,"./components/road":10,"./components/car":11,"./constants":6}],15:[function(require,module,exports) {
 var bundleURL = null;
 function getBundleURLCached() {
   if (!bundleURL) {
@@ -87276,7 +87434,7 @@ function reloadCSS() {
 
 module.exports = reloadCSS;
 
-},{"./bundle-url":11}],4:[function(require,module,exports) {
+},{"./bundle-url":15}],4:[function(require,module,exports) {
 
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
@@ -87299,7 +87457,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // Initialize sketch
 new _p2.default(_sketch2.default);
-},{"p5":10,"./js/sketch":3,"./styles/main.css":4}],0:[function(require,module,exports) {
+},{"p5":12,"./js/sketch":3,"./styles/main.css":4}],0:[function(require,module,exports) {
 var global = (1, eval)('this');
 var OldModule = module.bundle.Module;
 function Module() {
@@ -87317,7 +87475,7 @@ function Module() {
 module.bundle.Module = Module;
 
 if (!module.bundle.parent && typeof WebSocket !== 'undefined') {
-  var ws = new WebSocket('ws://' + window.location.hostname + ':63205/');
+  var ws = new WebSocket('ws://' + window.location.hostname + ':52222/');
   ws.onmessage = function(event) {
     var data = JSON.parse(event.data);
 

@@ -7,6 +7,7 @@ import River from './components/river';
 import Boat from './components/boat';
 import Bridge from './components/bridge';
 import Road from './components/road';
+import Car from './components/car';
 
 //Constants 
 import * as constants from "./constants";
@@ -24,11 +25,14 @@ const sketch = (p5) => {
   window.emergency = false;
   window.bridgeOpen = false;
 
+  window.bridgeCarSignal = false;
+
   window.T1Passed = false;
   window.T2Passed = false;
   window.T3Passed = false;
 
   window.B1Passed = false;
+  window.B3Passed = false;
 
 
   //All golbal objects var
@@ -36,7 +40,8 @@ const sketch = (p5) => {
   var boat = new Boat();
   var bridge = new Bridge();
   var road = new Road();
-
+  var carRight = new Car('right');
+  var carLeft = new Car('left');
   // Setup function
   p5.setup = () => {
     let canvas = p5.createCanvas(canvasWidth, canvasHeight);
@@ -54,12 +59,18 @@ const sketch = (p5) => {
     river.show();
 
     road.show();
-
+    
     bridge.update();
     bridge.show();
 
     boat.update();
     boat.show();  
+    
+    carRight.show();
+    carRight.update();
+
+    carLeft.show();
+    carLeft.update();
     
   }
 }
